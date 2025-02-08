@@ -1,33 +1,38 @@
 /* eslint-disable */
 
-import { useState } from "react";
+import React, { useState } from "react";
 import './ToDoList.css'
 
 export const ToDoList = () => {
 
-    const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState("");
+    interface Itask{
+        task:string,
+        status:boolean
+    }
+
+    const [tasks, setTasks  ] = useState<Itask[]>([]);
+    const [newTask, setNewTask] = useState<string>("");
     console.log(tasks);
 
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setNewTask(e.target.value)
 
 
     }
 
-    const addTask = () => {
-        setTasks(prevTasks => [...prevTasks, { task: newTask, status: false }]);
+    const addTask = ():void => {
+        setTasks((prevTasks) => [...prevTasks, { task: newTask, status: false }]);
         setNewTask("")
     }
 
-    const editTask = (taskId) => {
-        setTasks(tasks.map((task,index) => index === taskId?{...task,status:!task.status}:task ))
+    const editTask = (taskId:number) => {
+        setTasks(tasks.map((task:Itask,index:number) => index === taskId?{...task,status:!task.status}:task ))
     }
     
-    const deleteTask = (taskId) => {
+    const deleteTask = (taskId:number):void => {
 
-        setTasks(tasks.filter((task, index) => index !== taskId))
+        setTasks(tasks.filter((_task:Itask,index:number)=> index !== taskId))
 
     }
 
@@ -36,15 +41,17 @@ export const ToDoList = () => {
         <div className="to-do-list">
 
             <h1>To Do List!</h1>
+            <div>
             <ol>
                 {tasks.map((task, index) =>
 
                     <li key={index}>
                         <span className="text" style={{textDecoration: task.status ? 'line-through' : 'none'}}>{task.task}</span>
-                        <button onClick={() => editTask(index)}>✏️</button>
-                        <button onClick={() => deleteTask(index)}>🗑️</button>
-                    </li>)}
+                        <button className={"changeButton"} onClick={() => editTask(index)}>✏️</button>
+                        <button className={"deleteButton"} onClick={() => deleteTask(index)}>🗑️</button>
+                    </li> )}
             </ol>
+            </div>
             <input type="text" placeholder="Enter Task..." value={newTask} onChange={handleInputChange}></input>
             <button className="add-button" onClick={addTask}>Add Task</button>
         </div>

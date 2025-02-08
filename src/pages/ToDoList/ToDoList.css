@@ -20,3 +20,23 @@ button{
 
 }
 
+.add-button{
+
+    background-color: grey;
+    color: white;
+
+}
+
+.add-button:hover{
+    background-color:green ;
+}
+
+.deleteButton:hover{
+    background-color: red;
+
+}
+
+.changeButton:hover{
+    background-color: yellow;
+}
+
