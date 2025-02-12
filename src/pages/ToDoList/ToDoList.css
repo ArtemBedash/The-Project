@@ -1,20 +1,44 @@
+
+.headText{
+    color: black;
+}
+
 .to-do-list{
 font-family:'Times New Roman', Times, serif;
 text-align: center;
-margin-top: 150 px;
+margin-top: 150px;
 }
 
 h1{
 
-    font-size: 4 rem;
+    font-size: 4rem;
 }
 
-button{
-    font-size: 1.5 rem;
-    margin-left: 3px;
-    margin-bottom: 5px;
+ol{
+    padding: 0px;
+}
+
+li{
+    font-size: 2rem;
     font-weight: bold;
-    padding: 10 px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+}
+.text{
+    flex: 1;
+
+}
+
+
+button{
+    font-size: 1.5rem;
+    font-weight: bold;
     cursor:pointer;
 
 
@@ -39,4 +63,18 @@ button{
 .changeButton:hover{
     background-color: yellow;
 }
+
+.changeButton,.deleteButton{
+    margin-left: 5px;
+    font-size: 1em ;
+    padding: 5px 12px;
+}
+
+input{
+    font-size: 1.5em ;
+    border-radius: 3px;
+
+
+}
+
 

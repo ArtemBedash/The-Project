@@ -1,6 +1,5 @@
-/* eslint-disable */
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import './ToDoList.css'
 
 export const ToDoList = () => {
@@ -10,7 +9,12 @@ export const ToDoList = () => {
         status:boolean
     }
 
-    const [tasks, setTasks  ] = useState<Itask[]>([]);
+let storage:object[]= [];
+
+    const [tasks, setTasks] = useState<Itask[]>(() => {
+        const savedTasks = localStorage.getItem("tasks");
+        return savedTasks ? JSON.parse(savedTasks) : [];
+    });
     const [newTask, setNewTask] = useState<string>("");
     console.log(tasks);
 
@@ -23,10 +27,11 @@ export const ToDoList = () => {
 
     const addTask = ():void => {
         setTasks((prevTasks) => [...prevTasks, { task: newTask, status: false }]);
+        storage = [...storage,{task: newTask, status: false}]
         setNewTask("")
     }
 
-    const editTask = (taskId:number) => {
+    const editTask = (taskId:number):void => {
         setTasks(tasks.map((task:Itask,index:number) => index === taskId?{...task,status:!task.status}:task ))
     }
     
@@ -34,16 +39,22 @@ export const ToDoList = () => {
 
         setTasks(tasks.filter((_task:Itask,index:number)=> index !== taskId))
 
+
     }
 
+    useEffect(()=>{
+        localStorage.setItem("tasks",JSON.stringify(tasks));
+
+
+    },[tasks])
 
     return (
         <div className="to-do-list">
 
-            <h1>To Do List!</h1>
+            <h1 className='headText'>To Do List!</h1>
             <div>
             <ol>
-                {tasks.map((task, index) =>
+                {tasks.map((task:Itask, index:number) =>
 
                     <li key={index}>
                         <span className="text" style={{textDecoration: task.status ? 'line-through' : 'none'}}>{task.task}</span>
